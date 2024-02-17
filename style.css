@@ -167,7 +167,7 @@ button:disabled {
     }
 
     .container__input {
-        width: 70%;
+        width: 40%;
     }
     
     .containerbotao, .containerbotao-desabilitado {
@@ -181,6 +181,8 @@ button:disabled {
     }
 
     .texto__paragrafo {
-        font-size: 14px;
+        font-size: 18px;
     }
+    #resultado {
+    font-size: 18px;
 }
