@@ -149,12 +149,38 @@ button:disabled {
         justify-content: flex-start;
         padding: 2rem;
     }
-    .container__imagem-pessoa {
-        display: none;
+    
+    .container {
+        flex-direction: column;
+        height: auto;
+        width: 100%;
+        padding: 2rem;
+    }
+
+    .container__informacoes {
+        padding: 1rem;
+    }
+
+    .containercampo, .containerbotoes {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .container__input {
+        width: 100%;
+    }
+    
+    .containerbotao, .containerbotao-desabilitado {
+        width: 100%;
+        padding: 12px 24px;
+        font-size: 20px;
     }
 
     h1 {
-        font-size: 50px;
-        color: black;
+        font-size: 36px;
+    }
+
+    .texto__paragrafo {
+        font-size: 18px;
     }
 }
