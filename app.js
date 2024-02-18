@@ -36,6 +36,7 @@ function sortear() {
 }
 
 function reiniciar() {
+    let resultados = [];
     document.getElementById('de').value = '';
     document.getElementById('ate').value = '';
     document.getElementById('quantidade').value = '';
