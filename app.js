@@ -1,3 +1,4 @@
+let resultados = [];
 function gerarNumero(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
@@ -6,8 +7,6 @@ function sortear() {
     let quantidadeDeSorteos = parseInt(document.getElementById('quantidade').value);
     let numeroMenor = parseInt(document.getElementById('de').value);
     let numeroMaior = parseInt(document.getElementById('ate').value);
-
-    let resultados = [];
 
     for (let i = 0; i < quantidadeDeSorteos; i++) {
         let numeroSorteado = gerarNumero(numeroMenor, numeroMaior);
