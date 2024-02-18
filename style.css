@@ -143,6 +143,22 @@ button:disabled {
     font-size: 50px;
 }
 
+.numero-animado {
+        display: inline-block;
+        animation: animarNumero 1.0s ease-in-out;
+    }
+
+    @keyframes animarNumero {
+        0% {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
 @media screen and (max-width: 768px) {
     body {
         align-items: flex-start;
