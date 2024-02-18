@@ -1,17 +1,38 @@
+function gerarNumero(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
 function sortear() {
     let quantidadeDeSorteos = parseInt(document.getElementById('quantidade').value);
     let numeroMenor = parseInt(document.getElementById('de').value);
     let numeroMaior = parseInt(document.getElementById('ate').value);
-    
-    let numerosSorteados = [];
+
+    let resultados = [];
 
     for (let i = 0; i < quantidadeDeSorteos; i++) {
-        let numeroSorteado = parseInt(Math.floor(Math.random() * (numeroMaior - numeroMenor + 1)+numeroMenor));
-        numerosSorteados.push(numeroSorteado);
-        console.log(numerosSorteados);
-        let texto = numerosSorteados;
-        document.getElementById('resultado').innerText = texto;
+        let numeroSorteado = gerarNumero(numeroMenor, numeroMaior);
+
+        while (resultados.includes(numeroSorteado)) {
+            numeroSorteado = gerarNumero(numeroMenor, numeroMaior);
+        }
+        resultados.push(numeroSorteado);
     }
+
+    let resultadoElement = document.getElementById('resultado');
+    resultadoElement.innerHTML = '';
+
+    resultados.forEach((numero, index) => {
+        let numeroElement = document.createElement('span');
+        numeroElement.classList.add('numero-animado');
+        numeroElement.innerText = numero;
+
+        if (index !== resultados.length - 1) {
+            numeroElement.innerHTML += '&nbsp;';
+        }
+
+        resultadoElement.appendChild(numeroElement);
+    });
+
     document.getElementById('btn-reiniciar').disabled = false;
 }
 
