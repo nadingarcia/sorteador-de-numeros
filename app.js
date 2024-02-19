@@ -8,6 +8,13 @@ function sortear() {
     let numeroMenor = parseInt(document.getElementById('de').value);
     let numeroMaior = parseInt(document.getElementById('ate').value);
 
+    if (numeroMenor > numeroMenor){
+        alert('insira corretamente os valores por favor');
+        document.getElementById('de').value = '';
+        document.getElementById('ate').value = '';
+    } 
+    else {
+
     for (let i = 0; i < quantidadeDeSorteos; i++) {
         let numeroSorteado = gerarNumero(numeroMenor, numeroMaior);
 
@@ -33,7 +40,7 @@ function sortear() {
     });
 
     document.getElementById('btn-reiniciar').disabled = false;
-}
+} }
 
 function reiniciar() {
     resultados = [];
