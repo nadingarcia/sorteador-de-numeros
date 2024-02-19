@@ -8,12 +8,12 @@ function sortear() {
     let numeroMenor = parseInt(document.getElementById('de').value);
     let numeroMaior = parseInt(document.getElementById('ate').value);
 
-    if (numeroMenor > numeroMenor){
-        alert('insira corretamente os valores por favor');
+    if (quantidadeDeSorteos > (numeroMaior - numeroMenor + 1)){
+        alert('o intervalo entre os numeros é menor que a quantidade de sorteos por favor insira um intervalo maior ou uma quantidade de sorteios menor');
         document.getElementById('de').value = '';
         document.getElementById('ate').value = '';
-    } 
-    else {
+        document.getElementById('quantidade').value = '';
+    } else {
 
     for (let i = 0; i < quantidadeDeSorteos; i++) {
         let numeroSorteado = gerarNumero(numeroMenor, numeroMaior);
