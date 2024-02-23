@@ -22,6 +22,7 @@ function sortear() {
             numeroSorteado = gerarNumero(numeroMenor, numeroMaior);
         }
         resultados.push(numeroSorteado);
+    document.getElementById('numero-sorteado').innerText = numeroSorteado;
     }
 
     let resultadoElement = document.getElementById('resultado');
