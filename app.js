@@ -47,6 +47,7 @@ function reiniciar() {
     resultados = [];
     document.getElementById('de').value = '';
     document.getElementById('ate').value = '';
+    document.getElementById('numero-sorteado').innerText = 'BINGO'; 
     document.getElementById('quantidade').value = '';
     document.getElementById('resultado').innerText = '';
     document.getElementById('btn-reiniciar').disabled = true;
