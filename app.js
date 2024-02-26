@@ -42,8 +42,6 @@ function sortear() {
             }
             resultados.push(numeroSorteado);
 
-            document.getElementById('numero-sorteado').innerText = numeroSorteado; // Atualiza o número sorteado no elemento <h1>
-
             speakNumber(numeroSorteado); // Chamar a função speakNumber() para falar o número sorteado
         }
 
