@@ -1,54 +1,179 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <title>Sorteador de números</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sorteador de Números</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="shortcut icon" href="NEX07.webp" type="image/x-icon">
+  <meta name="theme-color" content="#8e44ad">
+  <style>
+    body {
+      background: linear-gradient(135deg, #8e44ad, #3498db);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Roboto', sans-serif;
+    }
+
+
+    .box {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(15px);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .box:hover {
+        box-shadow: 0 6px 20px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .numero-animado {
+      display: inline-block;
+      margin: 10px;
+      font-size: 2rem;
+      font-weight: bold;
+      color: #fff;
+      background: linear-gradient(135deg, #e74c3c, #f39c12);
+      padding: 20px;
+      border-radius: 50%;
+      animation: zoomIn 0.4s ease-in-out;
+    }
+
+    @keyframes zoomIn {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .buttons {
+      margin-top: 20px;
+    }
+
+    .button {
+      font-size: 1.2rem;
+    }
+  </style>
 </head>
-
 <body>
-    <div class="container">
-        <div class="container__conteudo">
-            <div class="container__informacoes">
-                <div class="container__texto">
-                    <h1 id="numero-sorteado">Sorteador<span class="container__texto-azul"> de números</span></h1>
-
-                    <div class="container__campo">
-                        <label class="texto__paragrafo">Quantidade de números</label>
-                        <input class="container__input" id="quantidade" type="number" min="1">
-                    </div>
-                    
-                    <div class="container__campo">
-                        <label class="texto__paragrafo">Do número</label>
-                        <input class="container__input" id="de" type="number" min="1">
-                    </div>
-                    
-                    <div class="container__campo">
-                        <label class="texto__paragrafo">Até o número</label>
-                        <input class="container__input" id="ate" type="number" min="1">
-                    </div>
-                </div>
-                
-                <div class="chute container__botoes">
-                    <button onclick="sortear()" id="btn-sortear" class="container__botao">Sortear</button>
-                    <button onclick="reiniciar()" id="btn-reiniciar" class="container__botao" disabled>Reiniciar</button>
-                </div>
-
-                <div class="container__texto">
-                    <label class="texto__paragrafo" id="resultado">Números sorteados:  nenhum até agora</label>
-                </div>
+  <div class="container">
+    <section class="section">
+      <div class="box">
+        <h1 class="title has-text-centered">Sorteador de Números</h1>
+        <div class="field">
+          <label class="label">Intervalo</label>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <input id="de" class="input" type="number" placeholder="De" min="0">
+              </div>
             </div>
-
-            <img src="./img/ia.png" alt="Uma pessoa com capacete de astronauta" class="container__imagem-pessoa" />
+            <div class="field">
+              <div class="control">
+                <input id="ate" class="input" type="number" placeholder="Até" min="0">
+              </div>
+            </div>
+          </div>
         </div>
-    </div>
+        <div class="buttons is-centered">
+          <button id="btn-sortear" class="button is-success" onclick="sortearUm()">
+            <span class="icon"><i class="fas fa-dice"></i></span>
+            <span>Sortear Um</span>
+          </button>
+          <button id="btn-reiniciar" class="button is-danger" onclick="reiniciar()">
+            <span class="icon"><i class="fas fa-redo"></i></span>
+            <span>Reiniciar</span>
+          </button>
+        </div>
+        <div id="resultado" class="content has-text-centered"></div>
+      </div>
+    </section>
+  </div>
 
-    <script src="app.js" defer></script>
+  <script>
+    let resultados = JSON.parse(localStorage.getItem('resultados')) || [];
+
+    function salvarResultados() {
+      localStorage.setItem('resultados', JSON.stringify(resultados));
+    }
+
+    function gerarNumero(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function speakNumber(number) {
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance();
+        utterance.text = number.toString();
+        utterance.lang = 'pt-BR';
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    function renderizarResultados() {
+      const resultadoElement = document.getElementById('resultado');
+      resultadoElement.innerHTML = '';
+      [...resultados].reverse().forEach(numero => {
+        const numeroElement = document.createElement('span');
+        numeroElement.classList.add('numero-animado');
+        numeroElement.innerText = numero < 10 ? `0${numero}` : numero;
+        resultadoElement.appendChild(numeroElement);
+      });
+    }
+
+    function sortearUm() {
+  const numeroMenor = parseInt(document.getElementById('de').value);
+  const numeroMaior = parseInt(document.getElementById('ate').value);
+
+  if (isNaN(numeroMenor) || isNaN(numeroMaior) || numeroMenor > numeroMaior) {
+    alert('Preencha os intervalos corretamente.');
+    return;
+  }
+
+  const totalPossiveis = numeroMaior - numeroMenor + 1;
+  if (resultados.length >= totalPossiveis) {
+    alert('Todos os números possíveis já foram sorteados!');
+    document.getElementById('btn-sortear').disabled = true;
+    return;
+  }
+
+  let numeroSorteado;
+  do {
+    numeroSorteado = gerarNumero(numeroMenor, numeroMaior);
+  } while (resultados.includes(numeroSorteado));
+
+  resultados.push(numeroSorteado);
+  salvarResultados();
+  speakNumber(numeroSorteado);
+  renderizarResultados();
+
+  // Desativa o botão caso todos os números tenham sido sorteados
+  if (resultados.length >= totalPossiveis) {
+    document.getElementById('btn-sortear').disabled = true;
+  }
+}
+
+function reiniciar() {
+  resultados = [];
+  salvarResultados();
+  renderizarResultados();
+  document.getElementById('de').value = '';
+  document.getElementById('ate').value = '';
+  document.getElementById('btn-sortear').disabled = false; // Reativa o botão ao reiniciar
+}
+
+    // Renderiza os números salvos ao carregar a página
+    renderizarResultados();
+  </script>
 </body>
-
 </html>
